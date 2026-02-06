@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>shivani notesPage</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lch(75.8% 39.91 342.4);
+        }
+
+        .box {
+            width: 350px;
+            background: lab(83.1% -52.08 47.99);
+            padding: 20px;
+            margin: 100px auto;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        input, textarea {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        textarea {
+            height: 120px;
+        }
+
+        button {
+            width: 95%;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: lab(52.17% -45.98 47.15);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3f8f26;
+        }
+
+        .logout {
+            background-color: #056e1fd2;
+        }
+
+        #message {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+
+        /* Box animation */
+.box {
+    animation: fadeSlide 0.8s ease;
+}
+
+@keyframes fadeSlide {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Profile pic pulse */
+.profile img {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Button bounce */
+button:active {
+    transform: scale(0.95);
+}
+
+/* Floating hearts */
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: floatUp 1s linear infinite;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+.profile {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.profile img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #f7f8f2;
+    animation: pulse 2s infinite;
+}
+
+.profile h3 {
+    margin-top: 8px;
+    color: hwb(90 97% 2%);
+    font-weight: 600;
+}
+
+    </style>
+
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div class="box" id="loginPage">
+    <h2>Login</h2>
+
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+
+    <button onclick="login()">Login</button>
+
+    <p id="message"></p>
+</div>
+
+<!-- NOTES PAGE -->
+<div class="box" id="notesPage" style="display:none;">
+    <h2>shivani Daily Notes</h2>
+
+    <textarea id="note" placeholder="Write your daily activities here..."></textarea>
+
+    <button onclick="saveNote()">Save Note</button>
+    <button class="logout" onclick="logout()">Logout</button>
+</div>
+<div class="profile">
+    <img src="https://img.sanishtech.com/u/2bef29de221394025dd5b48e518afb8f.jpg", alt="shivuu">
+    <h3>Welcome, Shivani </h3>
+</div>
+
+
+<script>
+    // Check if already logged in
+    if (localStorage.getItem("loggedIn") === "true") {
+        showNotes();
+    }
+
+    function login() {
+        let user = document.getElementById("username").value;
+        let pass = document.getElementById("password").value;
+
+        if (user === "shivani" && pass === "happy") {
+            localStorage.setItem("loggedIn", "true");
+            showNotes();
+        } else {
+            document.getElementById("message").style.color = "red";
+            document.getElementById("message").innerText = "Invalid Login Details";
+        }
+    }
+
+    function showNotes() {
+        document.getElementById("loginPage").style.display = "none";
+        document.getElementById("notesPage").style.display = "block";
+
+        // Load saved note
+        document.getElementById("note").value =
+            localStorage.getItem("dailyNote") || "";
+    }
+
+    function saveNote() {
+        let noteText = document.getElementById("note").value;
+        localStorage.setItem("dailyNote", noteText);
+        alert("Note Saved Successfully!");
+    }
+
+    function logout() {
+        localStorage.removeItem("loggedIn");
+        location.reload();
+        
+    }
+    
+</script>
+
+</body>
+</html>
